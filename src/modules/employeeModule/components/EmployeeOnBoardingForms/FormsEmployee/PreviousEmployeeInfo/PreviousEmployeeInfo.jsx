@@ -39,7 +39,7 @@ const PreviousEmployerInfo = forwardRef(({ tempId, onSuccess }, ref) => {
                   <AddFieldWidget
                     key={index}
                     index={index}
-                    title={`Employer ${index + 1}`}
+                    title={`Previous Company ${index + 1}`}
                     enableFieldset={true} // Forces Card Style
                     showSimpleTitle={false}
                     onRemove={() => remove(index)}
@@ -138,7 +138,7 @@ const PreviousEmployerInfo = forwardRef(({ tempId, onSuccess }, ref) => {
                     className={styles.addButton}
                     onClick={() => push(initialEmployer)}
                   >
-                    + Add Employer
+                    + Add Previous Company
                   </button>
                 </div>
               </>

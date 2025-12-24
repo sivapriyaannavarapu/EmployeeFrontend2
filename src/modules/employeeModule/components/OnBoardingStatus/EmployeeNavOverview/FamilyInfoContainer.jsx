@@ -31,8 +31,6 @@ const FamilyInfoContainer = () => {
     { label: "Occupation", value: "IT Job" },
     { label: "Email Id", value: "Design@varsitymgmt.com" },
     { label: "Phone Number", value: "+91 9876543210" },
-    { label: "State", value: "Telangana" },
-    { label: "Country", value: "India" },
   ];
  
   const motherData = [
@@ -42,8 +40,6 @@ const FamilyInfoContainer = () => {
     { label: "Occupation", value: "IT Job" },
     { label: "Email Id", value: "Design@varsitymgmt.com" },
     { label: "Phone Number", value: "+91 9876543210" },
-    { label: "State", value: "Telangana" },
-    { label: "Country", value: "India" },
   ];
  
   return (
@@ -54,6 +50,7 @@ const FamilyInfoContainer = () => {
       motherData={motherData}
       fatherIcon={<IconMale />}
       motherIcon={<IconFemale />}
+      onEdit={() => alert("Edit Family Info clicked")}
     />
       <DocumentsWidget
         title="Photos Uploaded"

@@ -19,12 +19,12 @@ const AddFieldWidget = ({
   if (isFirst && !forceFieldset) {
     return (
       <div className={styles.simpleBlock}>
-        {showSimpleTitle && (
+        {/* {showSimpleTitle && (
           <>
             <h3 className={styles.simpleTitle}>{title}</h3>
             <div className={styles.simpleLine}></div>
           </>
-        )}
+        )} */}
         <div className={styles.simpleContent}>{children}</div>
       </div>
     );

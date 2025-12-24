@@ -26,7 +26,7 @@ const FormCheckbox = ({
       />
       <label htmlFor={name} className={styles.form_checkbox_label}>
         <span className={`${styles.checkbox_custom} ${checked ? styles.checked : ''}`}>
-          {checked && <span className={styles.blue_dot}></span>}
+          {checked && <span className={styles.checkmark}></span>}
         </span>
       </label>
     </div>
@@ -34,3 +34,4 @@ const FormCheckbox = ({
 };
  
 export default FormCheckbox;
+ 

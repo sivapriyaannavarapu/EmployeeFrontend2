@@ -20,7 +20,7 @@ const PreviousEmployeeInfoContainer =() => {
     return (
         <div className={styles.Previous_Employee_Info_Container}>
             <div className={styles.Previous_Employee_accordians}>
-                <BankInfoWidget title="Previous Employee Info" data={previousEmployeeInfo}/>
+                <BankInfoWidget title="Previous Employee Info" data={previousEmployeeInfo} onEdit={() => alert("Edit Previous Employee Info clicked")}/>
             </div>
                <DocumentsWidget
         title="Documents Submitted"

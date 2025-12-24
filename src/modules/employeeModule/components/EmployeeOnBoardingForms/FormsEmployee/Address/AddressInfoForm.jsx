@@ -44,6 +44,15 @@ const AddressInfoFormNew = forwardRef(({ tempId, onSuccess }, ref) => {
 
   return (
     <div className={styles.address_form_container}>
+
+      <div className={styles.checkbox_section}>
+        <FormCheckbox
+          name="permanentAddressSame"
+          checked={values.permanentAddressSame}
+          onChange={onSameAddressToggle} // Use the safe handler
+        />
+        <span>Permanent Address Same as Current Address</span>
+      </div>
       {/* --- CURRENT ADDRESS --- */}
       <AddressSection
         title="Current Address"
@@ -55,16 +64,6 @@ const AddressInfoFormNew = forwardRef(({ tempId, onSuccess }, ref) => {
         onFieldChange={handleFieldChange}
         onFieldBlur={handleFieldBlur}
       />
-
-      {/* --- CHECKBOX --- */}
-      <div className={styles.checkbox_section}>
-        <FormCheckbox
-          name="permanentAddressSame"
-          checked={values.permanentAddressSame}
-          onChange={onSameAddressToggle} // Use the safe handler
-        />
-        <span>Permanent Address Same as Current Address</span>
-      </div>
 
       {/* --- PERMANENT ADDRESS --- */}
       {!values.permanentAddressSame && (

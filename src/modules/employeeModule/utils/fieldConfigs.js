@@ -6,10 +6,9 @@ export const createAddressFields = (
   countries = [],
   districts = []
 ) => [
-  { key: "name", label: "Name", type: "input" },
-  { key: "addressLine1", label: "Address Line 1", type: "input" },
-  { key: "addressLine2", label: "Address Line 2", type: "input" },
-
+  { key: "name", label: "Name", type: "input", placeholder: "Enter Employee Name" },
+  { key: "addressLine1", label: "Address Line 1", type: "input", placeholder: "Enter Address Line 1" },
+  { key: "addressLine2", label: "Address Line 2", type: "input", placeholder: "Enter Address Line 2" },
   {
     key: "countryId",
     label: "Country",

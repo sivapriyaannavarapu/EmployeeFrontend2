@@ -24,7 +24,12 @@ const AccountInfoContainer = () => {
   return (
     <div className={styles.accordian_container}>
       <div className={styles.accordians}>
-        <BankInfoWidget title="Personal Bank Info" data={personalBankInfo} />
+        <BankInfoWidget
+  title="Personal Bank Info"
+  data={personalBankInfo}
+  onEdit={() => alert("Edit Personal Bank Info clicked")}
+/>
+
         <BankInfoWidget title="Salary Account Info" data={salaryAccountInfo} />
       </div>
     </div>

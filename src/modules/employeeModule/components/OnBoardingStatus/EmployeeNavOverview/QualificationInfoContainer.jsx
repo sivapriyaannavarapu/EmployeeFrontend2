@@ -50,13 +50,9 @@ const QualificationInfoContainer = () => {
     { label: "Qualification", value: "B.Tech" },
     { label: "Degree", value: "B.Tech" },
     { label: "Specialisation", value: "Bachelors of Technology" },
-    { label: "To", value: "29-08-2025" },
     { label: "University", value: "JNTU" },
     { label: "Institute", value: "Malla Reddy Engineering College" },
     { label: "Passed Out Year", value: "2024" },
-    { label: "Nature Of Duties", value: "Duty 1" },
-    // We now pass the new <CertificateActions /> component
-    { label: "Certificate", value: <CertificateActions /> }, 
   ];
 
   return (
@@ -64,7 +60,7 @@ const QualificationInfoContainer = () => {
       <div className={styles.qualification_accordians}>
         <BankInfoWidget
           title="Qualification Details"
-          data={qualificationData}
+          data={qualificationData} onEdit={() => alert("Edit Qualification Details clicked")}
         />
            <DocumentsWidget
         title="Certificates Submitted"

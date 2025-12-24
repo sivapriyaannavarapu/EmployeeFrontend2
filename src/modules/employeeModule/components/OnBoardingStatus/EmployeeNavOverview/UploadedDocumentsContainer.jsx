@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./UploadedDocumentsContainer.module.css";
 import dividerline from "assets/EmployeeOnBoarding/dividerline.svg";
- 
+import editIcon from "assets/icons/editIcon.svg";
 /* ---------------- ICONS ---------------- */
  
 const IconFilePdf = () => (
@@ -77,8 +77,14 @@ const UploadedDocuments = () => {
       <div className={styles.headerRow}>
         <h4 className={styles.title}>Uploaded Documents</h4>
         <img src={dividerline} alt="divider" className={styles.dividerImage} />
+
+        <button type="button" className={styles.editButton}>
+  <img src={editIcon} alt="edit" />
+  <span>Edit</span>
+</button>
+
       </div>
- 
+
       <div className={styles.grid}>
         {documents.map((label) => (
           <div key={label} className={styles.item}>
@@ -90,5 +96,4 @@ const UploadedDocuments = () => {
     </div>
   );
 };
- 
 export default UploadedDocuments;

@@ -120,6 +120,7 @@ const SalaryInfoForm = ({ onBack, onSubmitComplete }) => {
             <div className={styles.checkboxRow}>
               <label className={styles.checkboxItem}>
                 <FormCheckbox
+                name="includePF"
                   checked={values.includePF}
                   onChange={(val) => setFieldValue("includePF", val)}
                 />
@@ -128,6 +129,7 @@ const SalaryInfoForm = ({ onBack, onSubmitComplete }) => {
 
               <label className={styles.checkboxItem}>
                 <FormCheckbox
+                name="includeESI"
                   checked={values.includeESI}
                   onChange={(val) => setFieldValue("includeESI", val)}
                 />

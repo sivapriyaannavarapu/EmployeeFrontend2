@@ -38,21 +38,18 @@
  
 .checkbox_custom.checked {
   border: 1.5px solid #3425FF;
-  background: #FFFFFF;
+  background: #3425FF;
 }
  
-.blue_dot {
-  width: 8px;
-  height: 8px;
-  background-color: #3425FF;
-  border-radius: 50%;
+.checkmark {
   position: absolute;
-  top: 50%;
+  width: 10px;
+  height: 6px;
+  border-left: 2px solid #ffffff;
+  border-bottom: 2px solid #ffffff;
+  transform: translate(-50%, -60%) rotate(-45deg);
+  top: 45%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  margin: 0;
-  padding: 0;
-  opacity: 1;
 }
  
 .checkbox_text {
@@ -105,4 +102,5 @@
     height: 6px;
   }
 }
+ 
  

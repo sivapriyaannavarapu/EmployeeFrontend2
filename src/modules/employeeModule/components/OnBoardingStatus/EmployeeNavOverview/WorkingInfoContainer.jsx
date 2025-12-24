@@ -21,7 +21,7 @@ const WorkingInfoContainer = () => {
   return (
     <div className={styles.working_Info_Container}>
       <div className={styles.widgetWrapper}>
-        <BankInfoWidget title="Working Information" data={workingInfo} />
+        <BankInfoWidget title="Working Information" data={workingInfo} onEdit={() => alert("Edit Working Information clicked")}/>
       </div>
     </div>
   );

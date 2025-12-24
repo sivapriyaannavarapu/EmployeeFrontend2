@@ -27,7 +27,7 @@ const AgreementInfoView=()=>{
     return (
         <div className={styles.accordian_container}>
             <div className={styles.accordians}>
-                <BankInfoWidget title="Agreement Info" data={agreementInfo}/>
+                <BankInfoWidget title="Agreement Info" data={agreementInfo} onEdit={() => alert("Edit Agreement Info clicked")}/>
                 <BankInfoWidget title="Cheque Info"  data={chequeInfo}/>
             </div>
             <div className={styles.cheque_Info}>
