@@ -11,10 +11,9 @@ import rightarrow from 'assets/managermappingsearch/rightarrow.jsx';
 import Button from 'widgets/Button/Button';
 
 const EmployeeSearchResults = ({ selectedEmployees, setSelectedEmployees }) => {
-
   const navigate = useNavigate();
 
-  // SAMPLE LIST
+  // SAMPLE DATA
   const sampleEmployees = [
     { id: "HYD-001", name: "Devansh.N", dept: "IT Cell", level: "Level 4", status: "full time", image: empprofile },
     { id: "HYD-002", name: "Devansh.N", dept: "IT Cell", level: "Level 4", status: "Contract", image: empprofile },
@@ -23,7 +22,6 @@ const EmployeeSearchResults = ({ selectedEmployees, setSelectedEmployees }) => {
     { id: "HYD-005", name: "Devansh.N", dept: "IT Cell", level: "Level 4", status: "Contract", image: empprofile },
   ];
 
-  // Handle Select Toggle
   const handleSelect = (employee, checked) => {
     if (checked) {
       setSelectedEmployees(prev => [...prev, employee]);
@@ -34,7 +32,6 @@ const EmployeeSearchResults = ({ selectedEmployees, setSelectedEmployees }) => {
 
   return (
     <div className={styles.search_wrapper}>
-
       {/* Top Row */}
       <div className={styles.topRow}>
         <h2 className={styles.title}>Recent Search</h2>
@@ -50,9 +47,9 @@ const EmployeeSearchResults = ({ selectedEmployees, setSelectedEmployees }) => {
       {/* Breadcrumb */}
       <div className={styles.breadcrumb}>
         <span>Hyderabad</span>
-        <img src={breadcrumarrow} className={styles.bcIcon} />
+        <img src={breadcrumarrow} className={styles.bcIcon} alt="" />
         <span>BanjaraHills</span>
-        <img src={breadcrumarrow} className={styles.bcIcon} />
+        <img src={breadcrumarrow} className={styles.bcIcon} alt="" />
         <span>Teaching</span>
       </div>
 
@@ -74,18 +71,15 @@ const EmployeeSearchResults = ({ selectedEmployees, setSelectedEmployees }) => {
         ))}
       </div>
 
-      {/* Buttons */}
+      {/* Buttons - Next always enabled */}
       <div className={styles.buttonRow}>
         <Button
-  buttonname="Cancel"
-  type="button"
-  variant="secondary"
-  width="108px"
-  onClick={() => {
-    setSelectedEmployees([]);   // 🔥 Clear global selected employees
-  }}
-/>
-
+          buttonname="Cancel"
+          type="button"
+          variant="secondary"
+          width="108px"
+          onClick={() => setSelectedEmployees([])}
+        />
 
         <Button
           buttonname="Next"
@@ -96,7 +90,6 @@ const EmployeeSearchResults = ({ selectedEmployees, setSelectedEmployees }) => {
           onClick={() => navigate("/scopes/employee/employeeManager/mapping-mode")}
         />
       </div>
-
     </div>
   );
 };

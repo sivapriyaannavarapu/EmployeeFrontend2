@@ -1,6 +1,10 @@
+// components/ManagerMapping/MappingMode.js
 import React, { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import EmployeeCard from "widgets/Cards/EmployeeCard/EmployeeCardWithCheckBox";
+
+import AssignGroupForm from "../ManagerMappingAndUnmappingComponents/AssignGroup/AssignGroupForm";
+import UnassignGroupForm from "../ManagerMappingAndUnmappingComponents/UnassignGroupForm/UnassignGroupForm";
 
 import styles from "./MappingMode.module.css";
 
@@ -14,38 +18,73 @@ import individulicon from 'assets/managermappingsearch/individualicon.svg';
 
 const MappingMode = ({ selectedEmployees = [] }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [selectedMode, setSelectedMode] = useState(null);
 
-  // ⬇ refs for cards
+  const isUnassignGroupRoute = location.pathname.includes('unassign-group');
+  const isAssignGroupRoute = location.pathname.includes('assign-group') && !isUnassignGroupRoute;
+
   const mapCardRef = useRef(null);
   const unmapCardRef = useRef(null);
-
-  // ⬇ floating panel position
   const [panelPos, setPanelPos] = useState({ top: 0, left: 0 });
 
   const goBack = () => navigate(-1);
   const handleClose = () => setSelectedMode(null);
 
-  // ⬇ When mode changes, compute card position
+  // Selection state
+  const employeeCount = selectedEmployees.length;
+  const hasEmployees = employeeCount > 0;
+  const isSingleEmployee = employeeCount === 1;
+  const canShowPanel = employeeCount > 1; // Only show floating panel for multiple
+
   useEffect(() => {
-    if (!selectedMode) return;
+    if (!selectedMode || !canShowPanel) return;
 
     const card = selectedMode === "map" ? mapCardRef.current : unmapCardRef.current;
-
     if (card) {
       const rect = card.getBoundingClientRect();
-
       setPanelPos({
-        top: rect.top + rect.height / 2 - 60, // ❗ centered vertically
-        left: rect.right + 10,                 // ❗ slightly spaced on right
+        top: rect.top + rect.height / 2 - 60,
+        left: rect.right + 10,
       });
     }
-  }, [selectedMode]);
+  }, [selectedMode, canShowPanel]);
+
+  // Handle clicks on Map/Unmap cards
+  const handleMapCardClick = () => {
+    if (!hasEmployees) return; // disabled
+
+    if (isSingleEmployee) {
+      // Directly go to Assign Individual
+      navigate("/scopes/employee/employeeManager/assign-individual", {
+        state: { selectedEmployees }
+      });
+    } else {
+      // Multiple → open panel
+      setSelectedMode("map");
+    }
+  };
+
+  const handleUnmapCardClick = () => {
+    if (!hasEmployees) return; // disabled
+
+    if (isSingleEmployee) {
+      // Directly go to Unassign Individual
+      navigate("/scopes/employee/employeeManager/unassign-individual", {
+        state: { selectedEmployees }
+      });
+    } else {
+      // Multiple → open panel
+      setSelectedMode("unmap");
+    }
+  };
 
   return (
     <div className={styles.mainWrapper}>
-      
-      {selectedMode && <div className={styles.fullBlurOverlay}></div>}
+      {/* Blur overlay only for multiple selection panel */}
+      {selectedMode && canShowPanel && !isAssignGroupRoute && !isUnassignGroupRoute && (
+        <div className={styles.fullBlurOverlay}></div>
+      )}
 
       <div className={styles.blurArea}>
         <div className={styles.wrapper}>
@@ -57,6 +96,7 @@ const MappingMode = ({ selectedEmployees = [] }) => {
             </div>
           </div>
 
+          {/* Always show selected employees + Add more */}
           <div className={styles.cardRow}>
             {selectedEmployees.map((emp, idx) => (
               <EmployeeCard key={idx} {...emp} isSelected={true} />
@@ -71,87 +111,112 @@ const MappingMode = ({ selectedEmployees = [] }) => {
             </div>
           </div>
 
-          <h3 className={styles.sectionTitle}>Select Mode of Mapping</h3>
+          {!isAssignGroupRoute && !isUnassignGroupRoute && (
+            <h3 className={styles.sectionTitle}>Select Mode of Mapping</h3>
+          )}
         </div>
       </div>
 
-      {/* CARDS + PANEL */}
-      <div className={styles.modeContainer}>
-
-        {/* MAP CARD */}
-        <div
-          ref={mapCardRef}
-          className={`${styles.modeCardOrange} ${
-            selectedMode === "map"
-              ? styles.cardSelected
-              : selectedMode === "unmap"
-              ? styles.blurredCard
-              : ""
-          }`}
-          onClick={() => setSelectedMode("map")}
-        >
-          <img src={mapicon} alt="map" className={styles.modeIcon} />
-          <h4>Mapping/Remapping</h4>
-          <p>Map manager, campus or remap, change designation here</p>
+      {/* Forms or Mode Cards */}
+      {isAssignGroupRoute ? (
+        <div className={styles.formContainer}>
+          <AssignGroupForm />
         </div>
-
-        {/* UNMAP CARD */}
-        <div
-          ref={unmapCardRef}
-          className={`${styles.modeCardBlue} ${
-            selectedMode === "unmap"
-              ? styles.cardSelected
-              : selectedMode === "map"
-              ? styles.blurredCard
-              : ""
-          }`}
-          onClick={() => setSelectedMode("unmap")}
-        >
-          <img src={unmapicon} alt="unmap" className={styles.modeIcon} />
-          <h4>Unmap</h4>
-          <p>Unmap manager, campus here</p>
+      ) : isUnassignGroupRoute ? (
+        <div className={styles.formContainer}>
+          <UnassignGroupForm />
         </div>
-      </div>
+      ) : (
+        <div className={styles.modeContainer}>
+          {/* MAP CARD */}
+          <div
+            ref={mapCardRef}
+            className={`${styles.modeCardOrange} ${
+              selectedMode === "map" ? styles.cardSelected :
+              selectedMode === "unmap" ? styles.blurredCard : ""
+            } ${!hasEmployees ? styles.disabledCard : ""}`}
+            onClick={handleMapCardClick}
+            style={{
+              pointerEvents: hasEmployees ? "auto" : "none",
+              cursor: hasEmployees ? "pointer" : "default",
+            }}
+          >
+            <img src={mapicon} alt="map" className={styles.modeIcon} style={!hasEmployees ? { opacity: 0.5 } : {}} />
+            <h4 style={!hasEmployees ? { opacity: 0.6 } : {}}>Mapping/Remapping</h4>
+            <p style={!hasEmployees ? { opacity: 0.5 } : {}}>
+              Map manager, campus or remap, change designation here
+            </p>
+          </div>
 
-      {/* FLOATING PANEL (absolute on screen) */}
-      {selectedMode && (
-        <div
-          className={styles.floatingPanel}
-          style={{
-            top: `${panelPos.top}px`,
-            left: `${panelPos.left}px`,
-          }}
-        >
+          {/* UNMAP CARD */}
+          <div
+            ref={unmapCardRef}
+            className={`${styles.modeCardBlue} ${
+              selectedMode === "unmap" ? styles.cardSelected :
+              selectedMode === "map" ? styles.blurredCard : ""
+            } ${!hasEmployees ? styles.disabledCard : ""}`}
+            onClick={handleUnmapCardClick}
+            style={{
+              pointerEvents: hasEmployees ? "auto" : "none",
+              cursor: hasEmployees ? "pointer" : "default",
+            }}
+          >
+            <img src={unmapicon} alt="unmap" className={styles.modeIcon} style={!hasEmployees ? { opacity: 0.5 } : {}} />
+            <h4 style={!hasEmployees ? { opacity: 0.6 } : {}}>Unmap</h4>
+            <p style={!hasEmployees ? { opacity: 0.5 } : {}}>
+              Unmap manager, campus here
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* Floating Panel - ONLY for multiple employees */}
+      {selectedMode && canShowPanel && !isAssignGroupRoute && !isUnassignGroupRoute && (
+        <div className={styles.floatingPanel} style={{ top: `${panelPos.top}px`, left: `${panelPos.left}px` }}>
           <div className={styles.closeCircle} onClick={handleClose}>
-           <img src={closeicon} alt="close" className={styles.closeIcon} />
+            <img src={closeicon} alt="close" className={styles.closeIcon} />
           </div>
 
           <div className={styles.floatingOptions}>
             {selectedMode === "map" ? (
               <>
-                <button className={styles.pillBtn}>
-  <img src={groupicon} className={styles.pillIcon} alt="" />
-  <span>Assign Group</span>
-</button>
+                <button
+                  className={styles.pillBtn}
+                  onClick={() => navigate("/scopes/employee/employeeManager/mapping-mode/assign-group")}
+                >
+                  <img src={groupicon} className={styles.pillIcon} alt="" />
+                  <span>Assign Group</span>
+                </button>
 
-<button className={styles.pillBtnAlt}>
-  <img src={individulicon} className={styles.pillIcon} alt="" />
-  <span>Assign Individual</span>
-</button>
-
+                <button
+                  className={styles.pillBtnAlt}
+                  onClick={() => navigate("/scopes/employee/employeeManager/assign-individual", {
+                    state: { selectedEmployees }
+                  })}
+                >
+                  <img src={individulicon} className={styles.pillIcon} alt="" />
+                  <span>Assign Individual</span>
+                </button>
               </>
             ) : (
               <>
-                <button className={styles.pillBtn}>
-  <img src={groupicon} className={styles.pillIcon} alt="" />
-  <span>UnAssign Group</span>
-</button>
+                <button
+                  className={styles.pillBtn}
+                  onClick={() => navigate("/scopes/employee/employeeManager/mapping-mode/unassign-group")}
+                >
+                  <img src={groupicon} className={styles.pillIcon} alt="" />
+                  <span>UnAssign Group</span>
+                </button>
 
-<button className={styles.pillBtnAlt}>
-  <img src={individulicon} className={styles.pillIcon} alt="" />
-  <span>UnAssign Individual</span>
-</button>
-
+                <button
+                  className={styles.pillBtnAlt}
+                  onClick={() => navigate("/scopes/employee/employeeManager/unassign-individual", {
+                    state: { selectedEmployees }
+                  })}
+                >
+                  <img src={individulicon} className={styles.pillIcon} alt="" />
+                  <span>UnAssign Individual</span>
+                </button>
               </>
             )}
           </div>

@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
+import EditPopup from "widgets/Popup/EditPopup";
+import SalaryInfoUpdate from "../CoDoUpdatePopup/SalaryInfoUpdate";
 import BankInfoWidget from "widgets/InfoCard/BankInfoWidget";
 import styles from "./SalaryInfo.module.css";
 
 const SalaryInfoReadOnly = () => {
+
+  const [showEdit, setShowEdit] = useState(false);
 
   const PfIcon = () => (
   <svg width="19" height="17" viewBox="0 0 19 17" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -40,10 +44,22 @@ const EsiIcon = () => (
     <div className={styles.salary_Info_Container}>
       <div className={styles.widgetWrapper}>
         <BankInfoWidget
-          title="Salary Info"
-          data={salaryInfoRead}
-          onEdit={() => alert("Edit Salary Info clicked")}
-        />
+  title="Salary Info"
+  data={salaryInfoRead}
+  onEdit={() => setShowEdit(true)}
+/>
+<EditPopup
+  isOpen={showEdit}
+  title="Edit Salary Information"
+  onClose={() => setShowEdit(false)}
+  onSave={() => {
+    console.log("Save Salary Info");
+    setShowEdit(false);
+  }}
+>
+  <SalaryInfoUpdate />
+</EditPopup>
+
 
         <div className={styles.pfWidgetWrapper}>
           <BankInfoWidget

@@ -12,10 +12,10 @@
   border-color: #3425FF;
 }
 
-.studentCard.selected {
+/* .studentCard.selected {
   border-color: #3425FF;
   background: #F0F4FF;
-}
+} */
 
 .studentCardContent {
   padding: 0 !important;

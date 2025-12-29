@@ -1,0 +1,40 @@
+.mainContentGrid {
+  display: grid;
+  gap: 10px;
+  width: 100%;
+  min-height: 400px;
+  grid-auto-flow: column;
+  grid-auto-columns: 390px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+}
+
+.mainContentGrid::-webkit-scrollbar {
+  height: 8px;
+}
+
+.mainContentGrid::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.mainContentGrid::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.mainContentGrid::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.gridColumn {
+  display: flex;
+  flex-direction: column;
+  min-height: 400px;
+  padding: 10px;
+  border-radius: 8px;
+  width: 390px;
+  background: #F3F6FF;
+}
+

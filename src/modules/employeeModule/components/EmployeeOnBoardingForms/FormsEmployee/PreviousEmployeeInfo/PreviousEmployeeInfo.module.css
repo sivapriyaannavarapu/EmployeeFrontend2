@@ -1,81 +1,167 @@
-/* MAIN CONTAINER SAME AS BANK INFO */
+/* ==========================================================
+   MAIN CONTAINER (Same as Bank Info)
+========================================================== */
 .formContainer {
-    background-color: #ffffff;
-    border-radius: 8px;
-    height: 100%;
-    overflow-y: auto;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+  background-color: #ffffff;
+  border-radius: 8px;
+  height: 100%;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
+
 .formContainer::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
-/* MAIN FORM WRAPPER */
+/* ==========================================================
+   UPLOAD SECTION
+========================================================== */
+.uploadRow {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.uploadLabel {
+  font-size: 12px;
+  font-weight: 400;
+  color: #2E2E2E;
+}
+
+/* Upload Button */
+.uploadButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 28px;
+  background: #EEF2FF;
+  border: 1px solid #3425FF;
+  border-radius: 6px;
+  color: #344054;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  width: fit-content;
+}
+
+/* ==========================================================
+   UPLOADED FILE LIST (MATCHES UPLOAD BUTTON COLORS)
+========================================================== */
+.fileList {
+  margin-top: 6px;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Each uploaded file row */
+.fileItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: #EEF2FF;            /* SAME as upload button */
+  border: 1px solid #3425FF;      /* SAME border */
+  border-radius: 6px;
+
+  padding: 6px 12px;
+}
+
+/* File name */
+.fileName {
+  font-size: 12px;
+  font-weight: 500;
+  color: #3425FF;                 /* SAME blue text */
+  word-break: break-all;
+  max-width: 85%;
+}
+
+/* Remove (X) button */
+.removeFileBtn {
+  background: transparent;
+  border: none;
+  color: #3425FF;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 2px;
+}
+
+.removeFileBtn:hover {
+  color: #1E1B8F;
+}
+
+/* ==========================================================
+   FORM STRUCTURE
+========================================================== */
 .form_grid {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-/* SECTION HEADER (divider line + title) */
+/* Section Header */
 .section_header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 4px;
-    gap: 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 4px;
 }
 
 .section_title {
-    font-weight: 500;
-    font-size: 14px;
-    color: #82808F;
-    margin-right: 5px;
+  font-weight: 500;
+  font-size: 14px;
+  color: #82808F;
 }
 
-
-/* THREE-COLUMN GRID FOR FIELDS */
+/* 3-Column Grid */
 .formGrid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-    margin-top: 5px;
-    margin-bottom: 2px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-top: 5px;
 }
 
-/* Standard item wrapper (Input / Dropdown) */
+/* Field Wrapper */
 .form_item {
-    width: 100%;
+  width: 100%;
 }
 
-/* Empty column placeholder for layout alignment */
+/* Empty placeholder for layout alignment */
 .form_item_empty {
-    visibility: hidden;
+  visibility: hidden;
 }
 
-/* Add Employer Button */
+/* ==========================================================
+   ADD BUTTON
+========================================================== */
 .addButtonContainer {
-    display: flex;
-    justify-content: center;
-    padding: 20px 0;
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
 }
 
 .addButton {
-    background: none;
-    border: none;
-    color: #4F46E5;
-    font-weight: 600;
-    font-size: 13px;
-    cursor: pointer;
+  background: none;
+  border: none;
+  color: #4F46E5;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
 }
 
-/* Responsive Behaviour */
+/* ==========================================================
+   RESPONSIVE
+========================================================== */
 @media (max-width: 900px) {
-    .formGrid {
-        grid-template-columns: 1fr !important;
-    }
+  .formGrid {
+    grid-template-columns: 1fr !important;
+  }
 
-    .form_item_empty {
-        display: none;
-    }
+  .form_item_empty {
+    display: none;
+  }
 }

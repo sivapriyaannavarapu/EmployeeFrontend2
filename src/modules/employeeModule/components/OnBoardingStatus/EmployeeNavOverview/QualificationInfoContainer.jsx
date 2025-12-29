@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
+import EditPopup from "widgets/Popup/EditPopup";
 // We are still using the same shared CSS module
 import styles from "../EmployeeNavOverview/QualificationInfoContainer.module.css"; 
 import BankInfoWidget from 'widgets/InfoCard/BankInfoWidget';
 import DocumentsWidget from "widgets/InfoCard/DocumentsWidget";
+import QualificationUpdate from "../CoDoUpdatePopup/QualificationUpdate";
 
 // --- New Certificate Icons ---
 
@@ -24,6 +26,7 @@ const IconDownload = () => (
 
 
 );
+
 
 // --- New Certificate Actions Component ---
 // This component will group the icons and apply the styles
@@ -55,13 +58,30 @@ const QualificationInfoContainer = () => {
     { label: "Passed Out Year", value: "2024" },
   ];
 
+  const [showEdit, setShowEdit] = useState(false);
+
   return (
     <div className={styles.qualification_Info_Container}>
       <div className={styles.qualification_accordians}>
         <BankInfoWidget
-          title="Qualification Details"
-          data={qualificationData} onEdit={() => alert("Edit Qualification Details clicked")}
-        />
+  title="Qualification Details"
+  data={qualificationData}
+  onEdit={() => setShowEdit(true)}
+/>
+
+<EditPopup
+  isOpen={showEdit}
+  title="Edit Qualification Details"
+  onClose={() => setShowEdit(false)}
+  onSave={() => {
+    console.log("SAVE QUALIFICATIONS");
+    setShowEdit(false);
+  }}
+>
+  <QualificationUpdate/>
+</EditPopup>
+
+
            <DocumentsWidget
         title="Certificates Submitted"
         documents={[

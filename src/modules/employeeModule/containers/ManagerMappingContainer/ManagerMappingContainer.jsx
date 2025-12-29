@@ -4,10 +4,12 @@ import { Routes, Route, useLocation, useNavigate, Outlet } from "react-router-do
 
 import EmployeeManagement from "../../components/EmployeeManagement/EmployeeManagement";
 import MappingLandingPage from "../../components/EmployeeLandingPage/EmployeeLanding";
-
 import EmployeeSearchResults from "../../components/ManagerMapping/EmployeeSearchResults";
 import EmployeeModuleHeader from "../../components/ManagerMapping/ManagerMappingHeaderContainer";
 import MappingMode from "../../components/ManagerMapping/MappingMode";
+
+// ⭐ Critical import for individual assign/unassign flows
+import ManagerMappingAndUnmappingLayout from "../ManagerMappingAndUnmappingContainer/Layout";
 
 import styles from "./ManagerMappingContainer.module.css";
 import topleftarrow from 'assets/managermappingsearch/topleftarrow.svg';
@@ -16,7 +18,6 @@ import topleftarrow from 'assets/managermappingsearch/topleftarrow.svg';
 const EmployeeLayout = ({ searchTerm, onSearchChange, selectedEmployees, setSelectedEmployees }) => {
   const location = useLocation();
   const navigate = useNavigate();
-
   const pathname = location.pathname;
 
   // Header titles
@@ -37,7 +38,6 @@ const EmployeeLayout = ({ searchTerm, onSearchChange, selectedEmployees, setSele
 
   return (
     <div className={`${styles.layout} ${showBackButton ? styles.withBackButton : ""}`}>
-      
       {showBackButton && (
         <button className={styles.backButton} onClick={() => navigate(-1)}>
           <img src={topleftarrow} alt="Back Arrow" className={styles.backArrowImg} />
@@ -62,7 +62,7 @@ const ManagerMappingContainer = () => {
 
   return (
     <Routes>
-      {/* PAGES WITH HEADER */}
+      {/* PAGES WITH HEADER + LAYOUT */}
       <Route
         path="/"
         element={
@@ -75,9 +75,7 @@ const ManagerMappingContainer = () => {
         }
       >
         <Route index element={<MappingLandingPage />} />
-
         <Route path="manage" element={<EmployeeManagement />} />
-
         <Route
           path="search-results"
           element={
@@ -89,10 +87,21 @@ const ManagerMappingContainer = () => {
         />
       </Route>
 
-      {/* FULL PAGE — NO HEADER */}
+      {/* FULL PAGE — NO HEADER — Supports nested group assign/unassign */}
       <Route
-        path="mapping-mode"
+        path="mapping-mode/*"
         element={<MappingMode selectedEmployees={selectedEmployees} />}
+      />
+
+      {/* INDIVIDUAL ASSIGN/UNASSIGN — Uses shared layout (likely has its own header/back) */}
+      <Route
+        path="assign-individual/*"
+        element={<ManagerMappingAndUnmappingLayout />}
+      />
+
+      <Route
+        path="unassign-individual/*"
+        element={<ManagerMappingAndUnmappingLayout />}
       />
     </Routes>
   );

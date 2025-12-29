@@ -16,6 +16,7 @@ const initialEmployer = {
   natureOfDuties: "",
   grossSalaryPerMonth: "",
   ctc: "",
+  certificateFiles: [],
 };
 
 const validationSchema = Yup.object().shape({
